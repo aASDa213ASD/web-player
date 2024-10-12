@@ -1,0 +1,224 @@
+{% extends "base.html.twig" %}
+
+{% block title %} Safeplace {% endblock %}
+
+{% block body %}
+<div class="flex flex-col h-dvh">
+    <!-- Header -->
+    <div class="bg-primary text-white py-3 mb-2">
+        <a class="text-2xl font-black ml-2"></a>
+    </div>
+
+    <!-- Main content -->
+    <div class="flex flex-row flex-grow mx-2 h-5/6 pb-2">
+        <!-- Playlist/Library Selection -->
+        <div class="overflow-y-auto w-1/4 bg-primary text-white rounded-lg me-2 transition-all duration-300 ease-in-out" id="playlist-container">
+            <div class="flex p-5">
+                <a class="text-gray-400 text-lg font-bold hover:text-gray-100 cursor-pointer transition ease-in-out delay-50 ml-2" id="library-button">
+                    <i class="nf nf-md-cards me-3 rotate-45"></i>
+                    <span id="library-button-text">Your Library</span>
+                </a>
+                <div class="ms-auto">
+                    <a class="text-gray-400 hover:bg-neutral-900 p-2 rounded-full" id="playlist-add" href="{{ path('playlist_edit') }}">
+                        <i class="nf nf-oct-plus"></i>
+                    </a>
+                </div>
+            </div>
+            <ul class="transition-all duration-300 ease-in-out">
+                {% if playlists|length == 0 %}
+                    <div class="my-3">
+                        <a>No playlists</a>
+                    </div>
+                {% else %}
+                    {% for playlist in playlists %}
+                    <li class="hover:bg-neutral-900 cursor-pointer flex items-center px-3 py-2 playlist-item">
+                        <img src="{{ playlist.getImage() }}" alt="playlist_image" class="w-12 rounded mr-3">
+                        <div class="playlist-info">
+                            <p class="text-white">{{ playlist.getName() }}</p>
+                            <p class="text-gray-500">{{ playlist.getDescription() }}</p>
+                        </div>
+                    </li>
+                    {% endfor %}
+                {% endif %}
+            </ul>
+        </div>
+
+        <!-- Playlist view -->
+        <div class="flex-grow md:w-3/4 overflow-y-auto bg-primary text-white rounded-lg me-2 transition-all duration-300 ease-in-out" id="playlist-view">
+            <div class="relative h-full">
+                <div class="absolute inset-0 bg-gradient-to-t from-transparent from-40% to-rose-700 z-0"></div>
+                <div class="flex flex-col md:flex-row items-center p-10 relative z-10"> <!-- Adjusted for mobile -->
+                    <img src="{{ asset('assets/media/path_light.png') }}" alt="playlist_image" class="w-36 md:w-56 rounded-lg mt-12 mr-0 md:mr-5 drop-shadow-2xl pb-3">
+                    <div class="mb-3 text-center md:text-left">
+                        <p class="text-4xl md:text-7xl font-black mb-5 text-white drop-shadow-xl">Playlist</p>
+                        <p class="text-gray-400">0 songs, 0 hr 0 min</p>
+                    </div>
+                </div>
+                <!-- List of tracks -->
+                <div class="bg-black/15 py-5 z-10 relative"> <!-- Added relative z-10 -->
+                    <div class="table w-full">
+                        <div class="table-header-group hidden md:table-row-group"> <!-- Hidden on mobile -->
+                            <div class="table-row">
+                                <div class="table-cell text-center text-gray-500 pb-4">#</div>
+                                <div class="table-cell text-left text-gray-500 pb-4">Title</div>
+                                <div class="table-cell text-left text-gray-500 pb-4">Date added</div>
+                                <div class="table-cell text-left text-gray-500 pb-4">Time</div>
+                            </div>
+                        </div>
+                        <div class="table-row-group">
+                            {% for i in range(1, 30) %}
+                            <div class="table-row hover:bg-neutral-300/10 cursor-pointer" data-index="{{i}}">
+                                <div class="table-cell align-middle text-center text-gray-500 px-3">
+                                    <span class="playlist-number">{{i}}</span>
+                                </div>
+                                <div class="table-cell py-2">
+                                    <div class="flex items-center h-full">
+                                        <img src="{{ asset('assets/media/lizard3.png') }}" alt="playlist_image" class="w-12 rounded mr-4">
+                                        <div>
+                                            <h1 class="hover:underline">POPTHATRUNK</h1>
+                                            <h1 class="text-gray-500">FREDDIEDREDD</h1>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="table-cell align-middle text-gray-400 hidden md:table-cell">Jul 5, 2024</div>
+                                <div class="table-cell align-middle text-gray-400 hidden md:table-cell">2:34</div>
+                            </div>
+                            {% endfor %} 
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Now playing -->
+        <div class="w-full md:w-1/4 p-4 bg-primary text-white rounded-lg overflow-y-auto overflow-hidden transition-all duration-300 ease-in-out opacity-100" id="track-view">
+            <div class="flex p-1">
+                <p class="font-bold mb-4 text-white">Playlist</p>
+                <div class="ms-auto">
+                    <a class="text-gray-400 hover:bg-neutral-900 p-2 rounded-full now-playing-toggle">
+                        <i class="nf nf-cod-close"></i>
+                    </a>
+                </div>
+            </div>
+            <img src="{{ asset('assets/media/path_light.png') }}" alt="playlist_image" class="rounded-lg mb-4">
+            
+            <div class="mb-5">
+                <p class="font-bold text-white text-2xl">NOTHING IS FOREVER</p>
+                <p class="text-gray-500">HAARPER</p>
+            </div>
+            
+            {% for i in range(1, 30) %}
+            <div class="bg-zinc-900 text-white rounded-lg p-3 mb-3">
+                <p class="font-bold pb-2">Next in queue</p>
+
+                <div class="flex items-center rounded-lg hover:bg-neutral-800 p-2">
+                    <img src="{{ asset('assets/media/lizard3.png') }}" alt="playlist_image" class="w-12 rounded mr-4">
+                    <div class="">
+                        <p>POPTHATRUNK</p>
+                        <p class="text-gray-500">FREDDIEDREDD</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+    </div>
+
+    <!-- Play controls -->
+    <div class="bg-primary text-white py-3 mt-auto">
+        <a class="text-2xl font-black ml-2"></a>
+        <a class="text-gray-400 hover:bg-neutral-900 p-1 rounded now-playing-toggle">
+            <i class="nf nf-md-play_box_outline"></i>
+        </a>
+    </div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script>
+    const rows = document.querySelectorAll('.table-row');
+
+    rows.forEach(row => {
+        const playlistNumber = row.querySelector('.playlist-number');
+        const originalText = playlistNumber ? playlistNumber.textContent : '';
+
+        row.addEventListener('mouseenter', () => {
+            if (playlistNumber) {
+                playlistNumber.innerHTML = '<i class="nf nf-fa-play text-gray-300"></i>';  // Change text to icon
+            }
+        });
+
+        row.addEventListener('mouseleave', () => {
+            if (playlistNumber) {
+                playlistNumber.textContent = originalText;  // Restore original number
+            }
+        });
+    });
+</script>
+<script>
+    /* Playlist list collapse */
+    const libraryButton = document.getElementById('library-button');
+    const libraryButtonText = document.getElementById('library-button-text');
+
+    const playlistAddButton = document.getElementById('playlist-add');
+    const playlistContainer = document.getElementById('playlist-container');
+    const playlistItems = playlistContainer.querySelectorAll('.playlist-item');
+
+    const isCollapsed = { collapsed: false };
+
+    libraryButton.addEventListener('click', () => {
+        const playlistInfo = playlistContainer.querySelectorAll('.playlist-info');
+        playlistInfo.forEach(info => {
+            info.classList.toggle('hidden'); // Toggle visibility
+        });
+
+        if (isCollapsed.collapsed)
+        {
+            playlistContainer.style.width = '25%';  // Return playlist view to original size
+            isCollapsed.collapsed = false;
+        }
+        else
+        {
+            playlistContainer.style.width = '0';       // Shrink width to 0
+            playlistContainer.style.padding = '0';     // Remove padding to fully hide it
+            playlistContainer.style.opacity = '1';     // Fade out content
+            playlistContainer.style.width = '95px';    // Adjust to fit only images
+            isCollapsed.collapsed = true;
+        }
+
+        libraryButtonText.classList.toggle('hidden');
+        playlistAddButton.classList.toggle('hidden');
+        
+    });
+</script>
+
+<script>
+    /* Track view collapse */
+    const trackViewToggleButtons = document.querySelectorAll('.now-playing-toggle');
+    const trackViewContainer = document.getElementById('track-view');
+    const playlistViewContainer = document.getElementById('playlist-view');
+    const isClosed = { closed: false };
+
+    trackViewToggleButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            if (isClosed.closed)
+            {  
+                trackViewContainer.style.width = '25%';     // Restore width
+                trackViewContainer.style.padding = '1rem';  // Restore padding
+                trackViewContainer.style.opacity = '1';     // Make it fully visible again
+                playlistViewContainer.style.width = '75%';  // Return playlist view to original size
+                isClosed.closed = false;
+            }
+            else
+            {
+                trackViewContainer.style.width = '0';       // Shrink width to 0
+                trackViewContainer.style.padding = '0';     // Remove padding to fully hide it
+                trackViewContainer.style.opacity = '0';     // Fade out content
+                playlistViewContainer.style.width = '100%'; // Make playlist view take full width
+                isClosed.closed = true;
+            }
+        });
+    });
+    
+</script>
+{% endblock %}

@@ -1,0 +1,82 @@
+{% extends "base.html.twig" %}
+
+{% block title %} Safeplace {% endblock %}
+
+{% block body %}
+<div class="flex flex-col h-dvh">
+    <!-- Header -->
+    <div class="bg-primary text-white py-3 mb-2">
+        <a class="text-2xl font-black ml-2"></a>
+    </div>
+
+    <!-- Main content -->
+    <div class="flex flex-row flex-grow mx-2 h-5/6 pb-2">
+         <!-- Playlist list -->
+        <div class="w-full overflow-y-auto bg-primary text-white rounded-lg me-2">
+            <div class="relative h-full">
+                <div class="absolute inset-0 bg-gradient-to-t from-transparent from-40% to-green-700 z-0"></div>
+                <div class="flex items-center p-10 relative z-10 justify-center"> <!-- Added relative z-10 -->
+                    <div class="mb-3">
+                        <p class="text-3xl md:text-5xl font-black mb-5 text-white drop-shadow-xl">What do we play today?</p>
+                        <p class="text-gray-400 text-sm md:text-base">Select your desired playlist or create a new one</p>
+                    </div>
+                </div>
+                <div class="flex flex-wrap justify-center mx-4 md:mx-16"> <!-- Centered the images -->
+                    {% for i in range(0, 50) %}
+                    <div class="group/playlist relative sm:w-44 md:w-48 mr-5 mb-6 transform transition-transform duration-300 hover:scale-110 cursor-pointer"> 
+                        <img src="{{ asset('assets/media/lizard3.png') }}" alt="playlist_image" class="rounded-lg drop-shadow-2xl group-hover/playlist:brightness-110"> 
+                        <div class="absolute bottom-0 left-0 right-0 bg-black bg-opacity-70 p-2 text-center rounded-b-lg overflow-hidden">
+                            <p class="text-white font-black text-sm md:text-base">Playlist {{ i + 1 }}</p> <!-- Replace with actual playlist name if available -->
+                        </div>
+                    </div>
+                    {% endfor %}
+                    <div class="group/playlist relative w-40 sm:w-44 md:w-48 mr-5 transform transition-transform duration-300 hover:scale-110 cursor-pointer"> 
+                        <div class="flex items-center justify-center h-full w-full py-20 bg-zinc-900/50 bg-opacity-70 rounded-lg drop-shadow-2xl group-hover/playlist:brightness-110">
+                            <i class="nf nf-oct-plus text-4xl text-white mb-6"></i> <!-- Icon instead of image -->
+                        </div>
+                        <div class="absolute bottom-0 left-0 right-0 bg-black bg-opacity-70 p-2 text-center rounded-b-lg overflow-hidden">
+                            <p class="text-white font-black text-sm md:text-base">Playlist</p> <!-- Replace with actual playlist name if available -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Play controls -->
+    <div class="bg-primary text-white py-3 mt-auto">
+        <a class="text-2xl font-black ml-2"></a>
+    </div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script>
+    const libraryButton = document.getElementById('library-button');
+    const playlistContainer = document.getElementById('playlist-container');
+    const playlistItems = playlistContainer.querySelectorAll('.playlist-item');
+    const isCollapsed = { collapsed: false };
+
+    libraryButton.addEventListener('click', () => {
+        const libraryButtonText = document.getElementById('library-button-text');
+        libraryButtonText.classList.toggle('hidden');
+
+        const playlistAddButton = document.getElementById('playlist-add');
+        playlistAddButton.classList.toggle('hidden');
+
+        const playlistInfo = playlistContainer.querySelectorAll('.playlist-info');
+        playlistInfo.forEach(info => {
+            info.classList.toggle('hidden'); // Toggle visibility
+        });
+
+        // Collapse or expand the container
+        if (isCollapsed.collapsed) {
+            playlistContainer.style.width = '25%'; // Set original width
+            isCollapsed.collapsed = false;
+        } else {
+            playlistContainer.style.width = '4.5%'; // Adjust to fit only images
+            isCollapsed.collapsed = true;
+        }
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html class="dark">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{% block title %}{% endblock %}</title>
+        <link rel="icon" href="">
+        {% include "css_loader.html.twig" %}
+        {% block stylesheet %}{% endblock %}
+
+        {% include "js_loader.html.twig" %}
+        {% block javascript %}{% endblock %}
+    </head>
+
+    <body class="bg-black antialiased overflow-hidden">
+        {% block body %}{% endblock %}
+        {% block script %}{% endblock %}
+    </body>
+</html>

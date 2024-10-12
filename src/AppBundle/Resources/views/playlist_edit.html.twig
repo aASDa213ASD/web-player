@@ -1,0 +1,23 @@
+{% extends "base.html.twig" %}
+
+{% block title %} Safeplace {% endblock %}
+
+{% block body %}
+{{ form_start(form) }}
+    {{ form_errors(form) }}
+    {% for field in form %}
+        <div class="col-md-12 mb-3">
+            {{ form_row(field) }}
+        </div>
+    {% endfor %}
+    <div class="d-flex">
+        <div class="ms-auto">
+            <button type="submit" class="bg-white text-black"><i class="nf nf-fa-check_circle me-2"></i>Save</button>
+            <a href="javascript:history.go(-1)" class="bg-white text-black"><i class="nf nf-md-close_circle me-2"></i>Cancel</a>
+        </div>
+    </div>
+{{ form_end(form) }}
+{% endblock %}
+
+{% block script %}
+{% endblock %}

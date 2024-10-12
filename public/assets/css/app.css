@@ -1,0 +1,41 @@
+@font-face
+{
+    font-family: "Ubuntu";
+    src: url("../fonts/ubuntu/Ubuntu-Regular.ttf") format("truetype");
+}
+
+body
+{
+    font-family: 'Ubuntu';
+}
+
+/* Scrollbar hidden */
+body::-webkit-scrollbar
+{
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none;    /* Firefox */
+    display: none;            /* Chrome, Safari, Opera */
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar
+{
+	background-color: transparent !important;
+	width: 5px !important;
+}
+
+::-webkit-scrollbar-thumb
+{
+	background: rgba(255, 255, 255, 0.08);
+}
+
+/* Nerd fonts */
+.nf
+{
+    font-family: "NerdFontsSymbols Nerd Font";
+    display: inline-flex;
+    align-items: center;
+    vertical-align: middle;
+    line-height: 1;
+    margin-bottom: 3px;
+}
